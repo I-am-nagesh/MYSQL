@@ -1,0 +1,224 @@
+Microsoft Windows [Version 10.0.22621.3737]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP1>mysql --version
+mysql  Ver 8.0.38 for Win64 on x86_64 (MySQL Community Server - GPL)
+
+C:\Users\HP1>mysql -u root -p
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.38 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    ->
+    -> ^C
+mysql> create database studentnames
+    -> ^C
+mysql> create database studentnames;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> show databases
+    -> ^C
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| studentnames       |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> create table movies(Name varchar(50), Rating Integer );
+ERROR 1046 (3D000): No database selected
+mysql> create database filmdatabase;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| filmdatabase       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| studentnames       |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use filmdatabase;
+Database changed
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| filmdatabase       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| studentnames       |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> create table Movies (Name varchar(50), Rating Integer);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc Movies;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Name   | varchar(50) | YES  |     | NULL    |       |
+| Rating | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> Insert Into Movies (Rating, Name) VALUES (4, "Avengers");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> Insert Into Movies (Rating, Name) VALUES (3, "Thor love and thunder");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> Insert Into Movies (Rating, Name) VALUES (3, "Thor love the dark world"), (5, "Iron man"), (5, "Avenger endgame");
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> desc Movies;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Name   | varchar(50) | YES  |     | NULL    |       |
+| Rating | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Movies;
++--------------------------+--------+
+| Name                     | Rating |
++--------------------------+--------+
+| Avengers                 |      4 |
+| Thor love and thunder    |      3 |
+| Thor love the dark world |      3 |
+| Iron man                 |      5 |
+| Avenger endgame          |      5 |
++--------------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select Name from Movies;
++--------------------------+
+| Name                     |
++--------------------------+
+| Avengers                 |
+| Thor love and thunder    |
+| Thor love the dark world |
+| Iron man                 |
+| Avenger endgame          |
++--------------------------+
+5 rows in set (0.00 sec)
+
+mysql> Select Rating from Movies;
++--------+
+| Rating |
++--------+
+|      4 |
+|      3 |
+|      3 |
+|      5 |
+|      5 |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> Insert Into Movies (Rating, Name) VALUES (4, "Avengers infinity war");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Movies;
++--------------------------+--------+
+| Name                     | Rating |
++--------------------------+--------+
+| Avengers                 |      4 |
+| Thor love and thunder    |      3 |
+| Thor love the dark world |      3 |
+| Iron man                 |      5 |
+| Avenger endgame          |      5 |
+| Avengers infinity war    |      4 |
++--------------------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Movies Where Rating > 4;
++-----------------+--------+
+| Name            | Rating |
++-----------------+--------+
+| Iron man        |      5 |
+| Avenger endgame |      5 |
++-----------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Movies Where Rating > 4 or Rating <= 3;
++--------------------------+--------+
+| Name                     | Rating |
++--------------------------+--------+
+| Thor love and thunder    |      3 |
+| Thor love the dark world |      3 |
+| Iron man                 |      5 |
+| Avenger endgame          |      5 |
++--------------------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Movies where Name = "Iron man";
++----------+--------+
+| Name     | Rating |
++----------+--------+
+| Iron man |      5 |
++----------+--------+
+1 row in set (0.00 sec)
+
+mysql> Delete from Movies Where rating <= 3;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from Movies;
++-----------------------+--------+
+| Name                  | Rating |
++-----------------------+--------+
+| Avengers              |      4 |
+| Iron man              |      5 |
+| Avenger endgame       |      5 |
+| Avengers infinity war |      4 |
++-----------------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> update Movies Set Rating = 5 where Name = "Avengers infinity war";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Movies;
++-----------------------+--------+
+| Name                  | Rating |
++-----------------------+--------+
+| Avengers              |      4 |
+| Iron man              |      5 |
+| Avenger endgame       |      5 |
+| Avengers infinity war |      5 |
++-----------------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> drop table Movies;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql>

@@ -1,0 +1,242 @@
+
+HP1@Nagesh MINGW64 ~
+$ mysql -u root -p
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.38 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show dbs
+    -> show dbs;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dbs
+show dbs' at line 1
+mysql> show dbs;;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dbs' at line 1
+ERROR:
+No query specified
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| filmdatabase       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| studentnames       |
+| sys                |
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> create database Movies;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| filmdatabase       |
+| information_schema |
+| movies             |
+| mysql              |
+| performance_schema |
+| studentnames       |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use Movies;
+Database changed
+mysql> create table actors;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table actors (firstname varchar(20), lastname varchar(20), gender varchar(20)
+, networth int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_movies |
++------------------+
+| actors           |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> desc actors;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| firstname | varchar(20) | YES  |     | NULL    |       |
+| lastname  | varchar(20) | YES  |     | NULL    |       |
+| gender    | varchar(20) | YES  |     | NULL    |       |
+| networth  | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into actors (firstname, lastname, gender, networth) values ('Jhonny', 'Deep', 'Male', 200),('Chris', 'Hemsworth', 'Male', 400), ('Scarlett', 'Johnson', 'Female', 500),
+('Chris', 'Evans', 'Male', 700), ('Paul', 'Rudd', 'Male', 150), ('Brie', 'Larson', 'Female'
+, 650), ('Chadwick', 'boseman', 'Male', 500);
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from actors
+    -> select * from actors;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from actors' at line 2
+mysql> select * from actors;
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Jhonny    | Deep      | Male   |      200 |
+| Chris     | Hemsworth | Male   |      400 |
+| Scarlett  | Johnson   | Female |      500 |
+| Chris     | Evans     | Male   |      700 |
+| Paul      | Rudd      | Male   |      150 |
+| Brie      | Larson    | Female |      650 |
+| Chadwick  | boseman   | Male   |      500 |
++-----------+-----------+--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from actors where firstname = 'Chris';
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Chris     | Hemsworth | Male   |      400 |
+| Chris     | Evans     | Male   |      700 |
++-----------+-----------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from actors where firstname like 'Ch%';
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Chris     | Hemsworth | Male   |      400 |
+| Chris     | Evans     | Male   |      700 |
+| Chadwick  | boseman   | Male   |      500 |
++-----------+-----------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from actors where lastname like '%n';
++-----------+----------+--------+----------+
+| firstname | lastname | gender | networth |
++-----------+----------+--------+----------+
+| Scarlett  | Johnson  | Female |      500 |
+| Brie      | Larson   | Female |      650 |
+| Chadwick  | boseman  | Male   |      500 |
++-----------+----------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from actors where lastname like '%o%';
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Chris     | Hemsworth | Male   |      400 |
+| Scarlett  | Johnson   | Female |      500 |
+| Brie      | Larson    | Female |      650 |
+| Chadwick  | boseman   | Male   |      500 |
++-----------+-----------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from actors where order by networth;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by networth' at line1
+mysql> select * from actors where ORDER BY networth;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY networth' at line1
+mysql> select * from actors order by networth;
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Paul      | Rudd      | Male   |      150 |
+| Jhonny    | Deep      | Male   |      200 |
+| Chris     | Hemsworth | Male   |      400 |
+| Scarlett  | Johnson   | Female |      500 |
+| Chadwick  | boseman   | Male   |      500 |
+| Brie      | Larson    | Female |      650 |
+| Chris     | Evans     | Male   |      700 |
++-----------+-----------+--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from actors order by networth desc;
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Chris     | Evans     | Male   |      700 |
+| Brie      | Larson    | Female |      650 |
+| Scarlett  | Johnson   | Female |      500 |
+| Chadwick  | boseman   | Male   |      500 |
+| Chris     | Hemsworth | Male   |      400 |
+| Jhonny    | Deep      | Male   |      200 |
+| Paul      | Rudd      | Male   |      150 |
++-----------+-----------+--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from actors order by networth asc;
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Paul      | Rudd      | Male   |      150 |
+| Jhonny    | Deep      | Male   |      200 |
+| Chris     | Hemsworth | Male   |      400 |
+| Scarlett  | Johnson   | Female |      500 |
+| Chadwick  | boseman   | Male   |      500 |
+| Brie      | Larson    | Female |      650 |
+| Chris     | Evans     | Male   |      700 |
++-----------+-----------+--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from actors limit 3;
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Jhonny    | Deep      | Male   |      200 |
+| Chris     | Hemsworth | Male   |      400 |
+| Scarlett  | Johnson   | Female |      500 |
++-----------+-----------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from actors offset 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1' at line 1
+mysql> select * from actors limit 3 offset 1;
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Chris     | Hemsworth | Male   |      400 |
+| Scarlett  | Johnson   | Female |      500 |
+| Chris     | Evans     | Male   |      700 |
++-----------+-----------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select firstname, lastname from actors;
++-----------+-----------+
+| firstname | lastname  |
++-----------+-----------+
+| Jhonny    | Deep      |
+| Chris     | Hemsworth |
+| Scarlett  | Johnson   |
+| Chris     | Evans     |
+| Paul      | Rudd      |
+| Brie      | Larson    |
+| Chadwick  | boseman   |
++-----------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from actors;
++-----------+-----------+--------+----------+
+| firstname | lastname  | gender | networth |
++-----------+-----------+--------+----------+
+| Jhonny    | Deep      | Male   |      200 |
+| Chris     | Hemsworth | Male   |      400 |
+| Scarlett  | Johnson   | Female |      500 |
+| Chris     | Evans     | Male   |      700 |
+| Paul      | Rudd      | Male   |      150 |
+| Brie      | Larson    | Female |      650 |
+| Chadwick  | boseman   | Male   |      500 |
++-----------+-----------+--------+----------+
+7 rows in set (0.00 sec)
+
+mysql>
